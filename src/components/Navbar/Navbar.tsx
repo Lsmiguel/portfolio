@@ -1,12 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Canvas from '../../assets/logo/canvas.png';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <nav className="flex justify-between px-20 py-10 items-center bg-p22">
+    <nav className="flex justify-between px-20 py-10 items-center bg-p22 h-1">
       <a href="/">
         <div className="flex items-center">
           <img src={Canvas} alt="icon" className="mr-2 w-12 h-12" />
@@ -21,26 +35,65 @@ export const Navbar: React.FC = () => {
           <a href="/projects">
             <li className="font-semibold text-black-300">Projetos</li>
           </a>
-          <div className="relative inline-block">
-        <a href="/hobby">
-          <li className="font-semibold text-black-300 inline-block mr-2">Hobbies</li>
-        </a>
-        <button onClick={() => setIsOpen(!isOpen)} className="inline-block text-black-300">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-
-        {isOpen && (
-          <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-            <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-              <a href="/music" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Music</a>
-              <a href="/photography" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Photography</a>
-              <a href="/pixelart" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Pixel Art</a>
+          <div className="relative inline-block" ref={dropdownRef}>
+            <div className="flex items-center">
+              <a href="/hobby">
+                <li className="font-semibold text-black-300">Hobbies</li>
+              </a>
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-black-300 ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="h-6 w-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
             </div>
+
+            {isOpen && (
+              <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div
+                  className="py-1"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="options-menu"
+                >
+                  <a
+                    href="/pixelart"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    Pixel Art
+                  </a>
+                  <a
+                    href="/photography"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    Fotografia
+                  </a>
+                  <a
+                    href="/music"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    Música
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
           <li>
             <svg
