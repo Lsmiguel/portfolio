@@ -1,13 +1,18 @@
-// https://tailwindcomponents.com/component/header-sidebar-dashboard
-
-import React, { useState } from 'react';
+import { useState } from 'react';
+import Canvas from '../../assets/logo/canvas.png';
 
 export const Navbar: React.FC = () => {
-  const [showMore, setShowMore] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
 
   return (
     <nav className="flex justify-between px-20 py-10 items-center bg-p22">
-      <h1 className="text-xl text-gray-800 font-bold">Miguel Ls</h1>
+      <a href="/">
+        <div className="flex items-center">
+          <img src={Canvas} alt="icon" className="mr-2 w-12 h-12" />
+          <h1 className="text-xl text-gray-800 font-bold">Miguel Ls</h1>
+        </div>
+      </a>
       <div className="flex items-center">
         <ul className="flex items-center space-x-6">
           <a href="/about">
@@ -16,24 +21,26 @@ export const Navbar: React.FC = () => {
           <a href="/projects">
             <li className="font-semibold text-black-300">Projetos</li>
           </a>
-          <a href="/photography">
-            <li className="font-semibold text-black-300">Fotografia</li>
-          </a>
-          {showMore && (
-            <>
-              <a href="/pixelart">
-                <li className="font-semibold text-black-300">Pixel Art</li>
-              </a>
-              <a href="/music">
-                <li className="font-semibold text-black-300">Música</li>
-              </a>
-            </>
-          )}
-          <li>
-            <button onClick={() => setShowMore(!showMore)}>
-              {showMore ? '<' : '+'}
-            </button>
-          </li>
+          <div className="relative inline-block">
+        <a href="/hobby">
+          <li className="font-semibold text-black-300 inline-block mr-2">Hobbies</li>
+        </a>
+        <button onClick={() => setIsOpen(!isOpen)} className="inline-block text-black-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        {isOpen && (
+          <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+              <a href="/music" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Music</a>
+              <a href="/photography" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Photography</a>
+              <a href="/pixelart" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Pixel Art</a>
+            </div>
+          </div>
+        )}
+      </div>
 
           <li>
             <svg
