@@ -10,13 +10,23 @@ export const Navbar: React.FC = () => {
       <h1 className="text-xl text-gray-800 font-bold">Miguel Ls</h1>
       <div className="flex items-center">
         <ul className="flex items-center space-x-6">
-          <li className="font-semibold text-black-300">Sobre</li>
-          <li className="font-semibold text-black-300">Projetos</li>
-          <li className="font-semibold text-black-300">Fotografia</li>
+          <a href="/about">
+            <li className="font-semibold text-black-300">Sobre</li>
+          </a>
+          <a href="/projects">
+            <li className="font-semibold text-black-300">Projetos</li>
+          </a>
+          <a href="/photography">
+            <li className="font-semibold text-black-300">Fotografia</li>
+          </a>
           {showMore && (
             <>
-              <li className="font-semibold text-black-300">Pixel Art</li>
-              <li className="font-semibold text-black-300">Música</li>
+              <a href="/pixelart">
+                <li className="font-semibold text-black-300">Pixel Art</li>
+              </a>
+              <a href="/music">
+                <li className="font-semibold text-black-300">Música</li>
+              </a>
             </>
           )}
           <li>
